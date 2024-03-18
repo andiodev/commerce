@@ -1,0 +1,49 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="p-2">Add New Listing</h2>
+
+    <!-- form add auction -->
+    <form  action="{% url 'add_listing' %}" method="POST" class="w-25 px-4 py-2">
+        
+        {% csrf_token %}
+        
+        <!-- title -->
+        <div class="form-group">
+            <label for="titleInput">Title:</label>
+            <input type="text" name="title" class="form-control" id="titleInput" placeholder="enter a title" >
+        </div>
+
+        <!-- description -->
+        <div class="form-group">
+            <label for="descriptionInput">Description:</label>
+            <textarea type="text" name="description" class="form-control" id="descriptionInput" placeholder="" ></textarea>
+        </div>
+
+        <!-- image url -->
+        <div class="form-group">
+            <label for="imageUrlInput">Image Url:</label>
+            <input type="text" name="imageUrl" class="form-control" id="imageUrlInput" placeholder="https://example.com/image.png" >
+        </div>
+
+        <!-- price -->
+        <div class="form-group">
+            <label for="priceInput">Price:</label>
+            <input type="number" min="0" name="price" class="form-control" id="priceInput" placeholder="$" >
+        </div>
+
+        <!-- select category -->
+        <div class="form-group">
+            <label for="categoryInput">Category:</label>
+            <select name="category" id="category" class="form-control">
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- add button -->
+        <input type="submit" value="Add New" class="btn btn-primary mt-3"/>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watch List</h2>
+
+    {% if not listing_data %}
+        <p>empty</p>
+    {% endif %}
+
+    <div class="d-flex align-items-start mt-4">
+    {% for data in listing_data %}
+        <div class="card p-2 mx-2" style="width: 18rem;">
+            <img src="{{ data.image_url }}" class="card-img-top" alt="{{ data.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ data.title }}</h5>
+                <p class="card-text">{{ data.description }}</p>
+                <a href="{% url 'listing' id=data.id %}" class="btn btn-primary">Show</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

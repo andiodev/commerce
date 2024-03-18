@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Category Listings</h2>
+
+    <!-- Filter the auction by category -->
+    <form action="{% url 'choose_category' %}" method="POST" class="d-flex align-items-start m-3">
+        {% csrf_token %}
+        <div class="form-group d-flex align-items-center">
+            <label for="categoryInput">Category:</label>
+            <select name="category" id="category" class="form-control mx-2">
+                <option value="None">None Selected</option>
+                {% for category in categories %}
+                    <option value="{{ category }}" >Select {{ category }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="Filter" class="btn btn-warning"/>
+    </form>
+
+    <!-- show auctions -->
+    {% if listing_data is None %}
+        <h6>Select a Category</h6>
+    {% else %}
+        <div class="d-flex align-items-start mt-4">
+            {% for data in listing_data %}
+                <div class="card p-2 mx-2" style="width: 18rem;">
+                    <img src="{{ data.image_url }}" class="card-img-top" alt="{{ data.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ data.title }}</h5>
+                        <p class="card-text">{{ data.description }}</p>
+                        <a href="{% url 'listing' id=data.id %}" class="btn btn-primary">Show</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
